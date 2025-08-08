@@ -65,12 +65,12 @@ export default function ProductInfo() {
               ({product.rating.count} reviews)
             </span>
           </div>
-          <p className="text-xl font-semibold mb-4">$ {product.price}</p>
+          <p className="text-black dark:text-white text-xl font-semibold mb-4">$ {product.price}</p>
           <div>
             <p className="text-muted-foreground mb-3">{product.description}</p>
           </div>
           <div className="flex items-center gap-4 mb-6">
-            <h2 className="font-medium text-2xl">Quantity</h2>
+            {/* <h2 className=" text-black dark:text-white font-medium text-2xl">Quantity</h2> */}
             {/* <div className="flex items-center">
               <button
                 onClick={() => {
