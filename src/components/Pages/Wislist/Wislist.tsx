@@ -33,7 +33,7 @@ export default function Wishlist({ products1 }: WishlistProps) {
               <div className="p-2.5 pt-0">
                 <h2
                   onClick={() => navigate(`/product/${product.id}`)}
-                  className="px-2 truncate text-lg font-semibold mb-2 cursor-pointer hover:underline"
+                  className="px-2 text-black dark:text-white truncate text-lg font-semibold mb-2 cursor-pointer hover:underline"
                 >
                   {product.title}
                 </h2>
@@ -43,13 +43,13 @@ export default function Wishlist({ products1 }: WishlistProps) {
                 <div className="flex justify-between items-center gap-2">
                   <Button
                     onClick={() => addToCart(product)}
-                    className="inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium h-10 px-4 py-2 flex-1 bg-[#2576DF] text-black hover:bg-primary/90"
+                    className="inline-flex items-center cursor-pointer hover:bg-[#2576DF] justify-center gap-2 rounded-md text-sm font-medium h-10 px-4 py-2 flex-1 bg-blue-700 text-black dark:hover:bg-primary/90"
                   >
                     Add to Cart <ShoppingCart className="ml-2 text-black" />
                   </Button>
                   <Archive
                     onClick={() => removeFromWishlist(product.id)}
-                    className="cursor-pointer"
+                    className="cursor-pointer dark:text-white text-black"
                   />
                 </div>
               </div>
@@ -58,12 +58,12 @@ export default function Wishlist({ products1 }: WishlistProps) {
         </div>
       ) : (
         <div className="text-center">
-          <h2 className="text-2xl font-bold mb-4">Your Wishlist is Empty</h2>
+          <h2 className="text-2xl text-black dark:text-white font-bold mb-4">Your Wishlist is Empty</h2>
           <p className="text-gray-600 dark:text-gray-300 mb-6">
             Add products to your wishlist to see them here.
           </p>
           <Link to="/">
-            <Button className="cursor-pointer text-center mx-auto bg-[#3576DF]">
+            <Button className="cursor-pointer text-center mx-auto bg-[#3576DF] hover:bg-blue-700">
               Continue Shopping
             </Button>
           </Link>

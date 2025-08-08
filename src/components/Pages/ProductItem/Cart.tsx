@@ -56,7 +56,7 @@ export default function Cart() {
             Add some products to your cart to see them here.
           </p>
           <Link to="/">
-            <Button className="dark:text-white text-black cursor-pointer text-center mx-auto bg-[#3576DF]">
+            <Button className="text-white bg-blue-700 dark:text-black cursor-pointer text-center mx-auto hover:bg-[#3576DF]">
               Contuine shopping
             </Button>
           </Link>

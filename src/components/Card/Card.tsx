@@ -44,7 +44,6 @@ export default function Card({ searchProducts }: CardProps) {
                 />
               </div>
 
-              {/* Product Info */}
               <div className="p-4">
                 <h2
                   onClick={() => {
