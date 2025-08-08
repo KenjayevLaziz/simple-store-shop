@@ -46,7 +46,7 @@ export default function ProductInfo() {
           <p className="text-black dark:text-white  inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold mb-2">
             {product.category}
           </p>
-          <h1 className="text-2xl font-bold mb-2">{product.title}</h1>
+          <h1 className="text-black dark:text-white text-2xl font-bold mb-2">{product.title}</h1>
           <div className="flex items-center gap-1 mb-4">
             {Array.from({ length: 5 }, (_, index) => (
               <Star
