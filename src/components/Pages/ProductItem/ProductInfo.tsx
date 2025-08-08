@@ -22,7 +22,7 @@ export default function ProductInfo() {
 
   if (!product) {
     return (
-      <div className="container mx-auto px-4 py-8">
+      <div className="text-black dark:text-white  container mx-auto px-4 py-8">
         <p>Loading product...</p>
       </div>
     )
@@ -34,7 +34,7 @@ export default function ProductInfo() {
     <div className="container mx-auto px-4 py-8 max-w-[1440px] w-full">
       <Link
         to="/"
-        className="text-sm hover:underline inline-flex items-center mb-8"
+        className="text-black dark:text-white  text-sm hover:underline inline-flex items-center mb-8"
       >
         Back to Products
       </Link>
@@ -43,7 +43,7 @@ export default function ProductInfo() {
           <img src={product.image} alt={product.title} />
         </div>
         <div>
-          <p className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold mb-2">
+          <p className="text-black dark:text-white  inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold mb-2">
             {product.category}
           </p>
           <h1 className="text-2xl font-bold mb-2">{product.title}</h1>
@@ -98,7 +98,7 @@ export default function ProductInfo() {
               onClick={() => {
                 addToCart(product)
               }}
-              className="w-full px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700"
+              className="cursor-pointer w-full px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700"
             >
               Add to Cart
             </button>
@@ -110,7 +110,7 @@ export default function ProductInfo() {
             >
               <Heart
                 className={
-                  isLiked ? "fill-red-500 text-red-500" : "text-white"
+                  isLiked ? "fill-red-500 text-red-500" : "text-black dark:text-white "
                 }
               />
             </div>

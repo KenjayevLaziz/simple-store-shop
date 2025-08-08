@@ -24,19 +24,18 @@ export default function Card({ searchProducts }: CardProps) {
               key={product.id}
               className="bg-transparent border overflow-hidden shadow-md rounded-xl group relative hover:shadow-lg transition-shadow duration-300"
             >
-              {/* Like button */}
               <div
                 onClick={() => toggleLike(product.id)}
-                className="absolute right-[25px] cursor-pointer w-[50px] h-[50px] z-10 top-[25px] bg-[#17191d] hover:bg-[#1E293B] rounded-sm flex items-center justify-center"
+                className="absolute right-[25px] cursor-pointer w-[50px] h-[50px] z-10 top-[25px] dark:bg-[#17191d] dark:hover:bg-[#1E293B] bg-[#cccccc] hover:bg-[#F1F5F9] rounded-sm flex items-center justify-center"
               >
                 <Heart
                   className={
-                    isLiked ? "fill-red-500 text-red-500" : "text-white"
+                    isLiked ? "fill-red-500 text-red-500" : "dark:text-white text-black"
                   }
                 />
               </div>
 
-              {/* Product Image */}
+
               <div className="relative overflow-hidden">
                 <img
                   src={product.image}

@@ -43,7 +43,7 @@ export default function Cart() {
   return (
     <div className="p-4 max-w-[1440px] w-full mx-auto">
       {cartItems.length ? (
-        <h1 className="text-2xl font-bold mb-8 capitalize mt-5">
+        <h1 className="text-2xl dark:text-white text-black font-bold mb-8 capitalize mt-5">
           shopping cart
         </h1>
       ) : null}
@@ -56,7 +56,7 @@ export default function Cart() {
             Add some products to your cart to see them here.
           </p>
           <Link to="/">
-            <Button className="cursor-pointer text-center mx-auto bg-[#3576DF]">
+            <Button className="dark:text-white text-black cursor-pointer text-center mx-auto bg-[#3576DF]">
               Contuine shopping
             </Button>
           </Link>
@@ -73,14 +73,14 @@ export default function Cart() {
                         <img
                           src={product.image}
                           alt={product.title}
-                          className="w-20 h-20 object-cover mb-2"
+                          className=" w-20 h-20 object-cover mb-2"
                         />
                         <div className="">
                           <h2
                             onClick={() => {
                               navigite(`/product/${product.id}`);
                             }}
-                            className="hover:underline cursor-pointer font-medium"
+                            className="dark:text-white text-black hover:underline cursor-pointer font-medium"
                           >
                             {product.title}
                           </h2>
@@ -93,23 +93,23 @@ export default function Cart() {
                               onClick={() => {
                                 decreaseQuantity(product.id);
                               }}
-                              className="cursor-pointer text-center px-3 pb-2 pt-0 text-xl text-white font-medium rounded-md  bg-transparent border hover:bg-[#1E293B] "
+                              className="dark:text-white text-black cursor-pointer text-center px-3 pb-2 pt-0 text-xl  font-medium rounded-md  bg-transparent border hover:bg-[#1E293B] "
                             >
                               -
                             </button>
-                            <span className="px-4 py-1 text-2xl font-medium w-[45px]">
+                            <span className="dark:text-white text-black px-4 py-1 text-2xl font-medium w-[45px]">
                               {quantity}
                             </span>
                             <button
                               onClick={() => {
                                 increaseQuantity(product.id);
                               }}
-                              className="cursor-pointer px-3 pb-2 pt-0 text-xl text-white font-medium rounded-md  bg-transparent border hover:bg-[#1E293B]"
+                              className="dark:text-white text-black cursor-pointer px-3 pb-2 pt-0 text-xl  font-medium rounded-md  bg-transparent border hover:bg-[#1E293B]"
                             >
                               +
                             </button>
                             <button
-                              className="text-white ml-4 cursor-pointer"
+                              className="dark:text-white text-black ml-4 cursor-pointer"
                               onClick={() => removeFromCart(product.id)}
                             >
                               <Archive />
@@ -130,12 +130,12 @@ export default function Cart() {
                 onClick={() => {
                   handleCheckout();
                 }}
-                className="capitalize bg-transparent hover:bg-[#1E293B] text-white border cursor-pointer"
+                className="dark:text-white text-black capitalize bg-transparent hover:bg-[#F1F5F9] dark:hover:bg-[#1E293B]  border cursor-pointer"
               >
                 clear cart
               </Button>
               <Link to="/">
-                <Button className="capitalize bg-transparent text-white border cursor-pointer hover:bg-[#1E293B] ">
+                <Button className="dark:text-white text-black hover:bg-[#F1F5F9] capitalize bg-transparent  border cursor-pointer dar:hover:bg-[#1E293B] ">
                   continue shopping
                 </Button>
               </Link>
@@ -143,19 +143,19 @@ export default function Cart() {
           </div>
 
           <div className="max-w-[400px] w-full">
-            <div className="grid items-center p-4 rounded-2xl bg-[#0D1526] gap-y-5">
-              <h1 className="font-semibold text-lg mb-4">Order Summary</h1>
-              <p className="capitalize flex justify-between w-full">
+            <div className="grid items-center p-4 rounded-2xl dark:bg-[#0D1526] bg-[#F1F5F9] gap-y-5">
+              <h1 className="dark:text-white text-black font-semibold text-lg mb-4">Order Summary</h1>
+              <p className="dark:text-white text-black capitalize flex justify-between w-full">
                 Subtotal <span>${totalPrice.toFixed(2)}</span>
               </p>
-              <p className="capitalize flex justify-between w-full">
+              <p className="dark:text-white text-black capitalize flex justify-between w-full">
                 Shipping <span>free</span>
               </p>
-              <p className="capitalize flex justify-between w-full">
+              <p className="dark:text-white text-black capitalize flex justify-between w-full">
                 Tax <span>${(totalPrice / 10).toFixed(2)}</span>
               </p>
               <hr />
-              <p className="capitalize flex justify-between w-full">
+              <p className="dark:text-white text-black capitalize flex justify-between w-full">
                 Total <span>${(totalPrice * 1.1).toFixed(2)}</span>
               </p>
               <Button

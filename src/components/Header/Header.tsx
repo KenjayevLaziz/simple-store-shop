@@ -112,7 +112,7 @@ export default function Header() {
           <ul className="flex items-center gap-4 max-w-[300px] w-full justify-between">
             <div
               onClick={() => setIsActive(!isActive)}
-              className="relative cursor-pointer w-[45px] h-[45px] dark:hover:bg-[#1E293B] hover:bg-[#cfc6c6] rounded-sm flex items-center justify-center"
+              className="relative cursor-pointer w-[110px] h-[45px] dark:hover:bg-[#1E293B] hover:bg-[#cfc6c6] rounded-sm flex items-center justify-center "
             >
               {theme === "dark" ? (
                 <Moon className="text-white" />
@@ -173,35 +173,35 @@ export default function Header() {
               <div className="relative w-full">
                 <Button
                   onClick={toggleMenu}
-                  className="rounded-full w-[50px] h-[50px] flex justify-center items-center bg-[yellow] cursor-pointer text-black"
+                  className="rounded-full   w-[50px] h-[50px] flex justify-center items-center bg-[yellow] hover:bg-[#F1F5F9] cursor-pointer text-black"
                 >
                   <span className="text-black uppercase">{user.name}</span>
                 </Button>
                 {openUserMenu && (
                   <div className="absolute w-full border dark:border-white top-[60px] left-0 bg-white dark:bg-[#020817] z-50 rounded-md">
-                    <h1 className="px-2 py-1.5 text-sm font-semibold capitalize">
+                    <h1 className="dark:text-white text-black px-2 py-1.5 text-sm font-semibold capitalize">
                       my account
                     </h1>
                     <hr />
                     <Link to="/profile">
-                      <p onClick={toggleMenu} className="px-2 py-1.5 cursor-pointer hover:bg-[#1E293B]">
+                      <p onClick={toggleMenu} className="dark:text-white hover:bg-[#F1F5F9] text-black px-2 py-1.5 cursor-pointer dark:hover:bg-[#1E293B]">
                         Profile
                       </p>
                     </Link>
                     <Link to="/wishlist">
-                      <p onClick={toggleMenu} className="px-2 py-1.5 cursor-pointer hover:bg-[#1E293B]">
+                      <p onClick={toggleMenu} className="dark:text-white hover:bg-[#F1F5F9] text-black px-2 py-1.5 cursor-pointer dark:hover:bg-[#1E293B]">
                         Wishlist
                       </p>
                     </Link>
                     <Link to="/cart">
-                      <p onClick={toggleMenu} className="px-2 py-1.5 cursor-pointer hover:bg-[#1E293B]">
+                      <p onClick={toggleMenu} className="dark:text-white hover:bg-[#F1F5F9] text-black px-2 py-1.5 cursor-pointer dark:hover:bg-[#1E293B]">
                         Cart
                       </p>
                     </Link>
                     <hr />
                     <p
                       onClick={toggleMenu1}
-                      className="px-2 py-1.5 cursor-pointer hover:bg-[#1E293B]"
+                      className="dark:text-white text-black px-2 py-1.5 hover:bg-[#F1F5F9] cursor-pointer dark:hover:bg-[#1E293B]"
                     >
                       Logout
                     </p>
