@@ -1,4 +1,4 @@
-import { Moon, Sun, Heart, ShoppingCart, LogInIcon } from "lucide-react";
+import { Moon, Sun, Heart, ShoppingCart, LogInIcon, Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Button } from "../ui/button";
 import { Link, useNavigate } from "react-router-dom";
@@ -8,7 +8,7 @@ import { useLikedProducts } from "../context/LikedProductsContext";
 
 interface User {
   name: string;
-  [key: string]: unknown; 
+  [key: string]: unknown;
 }
 
 export default function Header() {
@@ -60,23 +60,25 @@ export default function Header() {
     setIsActive(false);
   };
 
-  const [open, setOpen] = useState<boolean>(false);
+  const [openUserMenu, setOpenUserMenu] = useState<boolean>(false);
 
   const toggleMenu = () => {
-    setOpen(!open);
+    setOpenUserMenu(!openUserMenu);
   };
 
   const toggleMenu1 = () => {
     setUser(null);
-    setOpen(false);
+    setOpenUserMenu(false);
     navigate("/login");
   };
 
-  return (
-    <div className="dark:bg-[#020817] bg-white text-white w-full fixed mx-auto top-0 left-0 right-0 z-50 border-b-white">
-      <header className="text-white p-4 flex w-full max-w-[1440px] justify-between items-center mx-auto top-0 left-0 right-0 z-50 border-b-white">
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
 
-        <nav className="flex max-w-[450px] w-full justify-between">
+  return (
+    <div className="dark:bg-[#020817] bg-white text-white w-full fixed top-0 left-0 right-0 z-50 border-b border-gray-200 dark:border-gray-700">
+      <header className="text-white p-4 flex w-full max-w-[1440px] justify-between items-center mx-auto z-50">
+        <nav className="hidden md:flex max-w-[450px] w-full justify-between">
           <ul className="dark:text-white text-black flex items-center justify-between max-w-[300px] w-full">
             <Link to="/">
               <strong className="font-bold text-xl cursor-pointer">Store</strong>
@@ -99,10 +101,15 @@ export default function Header() {
           </ul>
         </nav>
 
-
-        <div className="max-w-[400px] w-full flex justify-end">
+        <div className="md:hidden flex items-center justify-between w-full">
+          <strong className="font-bold text-xl mb-4 cursor-pointer">Store</strong>
+          <button onClick={toggleSidebar} aria-label="Toggle Menu" className="text-black dark:text-white">
+            {sidebarOpen ? <X size={28} /> : <Menu size={28} />}
+          </button>
+          
+        </div>
+        <div className="hidden md:flex max-w-[400px] w-full justify-end">
           <ul className="flex items-center gap-4 max-w-[300px] w-full justify-between">
-
             <div
               onClick={() => setIsActive(!isActive)}
               className="relative cursor-pointer w-[45px] h-[45px] dark:hover:bg-[#1E293B] hover:bg-[#cfc6c6] rounded-sm flex items-center justify-center"
@@ -117,7 +124,7 @@ export default function Header() {
               <div
                 className={
                   isActive
-                    ? "w-[110px] absolute left-[-70px] top-[50px] dark:bg-[#1e3150]  dark:text-white text-black rounded-md p-2 flex flex-col gap-2 z-150 bg-[#f1ecec]"
+                    ? "w-[110px] absolute left-[-70px] top-[50px] dark:bg-[#1e3150]  dark:text-white text-black rounded-md p-2 flex flex-col gap-2 z-50 bg-[#f1ecec]"
                     : "hidden"
                 }
               >
@@ -142,97 +149,64 @@ export default function Header() {
               </div>
             </div>
 
-            {likeCount ? (
-              <Link to="/wishlist">
-                <div className="relative cursor-pointer w-[45px] h-[45px] dark:hover:bg-[#1E293B] hover:bg-[#cfc6c6] rounded-sm flex items-center justify-center">
-                  <Heart className="dark:hover:bg-[#1E293B] dark:text-white text-black" />
+            <Link to="/wishlist">
+              <div className="relative cursor-pointer w-[45px] h-[45px] dark:hover:bg-[#1E293B] hover:bg-[#cfc6c6] rounded-sm flex items-center justify-center">
+                <Heart className="dark:hover:bg-[#1E293B] dark:text-white text-black" />
+                {likeCount > 0 && (
                   <div className="absolute bg-[#3576DF] right-0 rounded-full text-[14px] w-5 h-5 top-0 flex justify-center items-center">
                     {likeCount}
                   </div>
-                </div>
-              </Link>
-            ) : (
-              <Link to="/wishlist">
-                <div className="cursor-pointer w-[45px] h-[45px] dark:hover:bg-[#1E293B] hover:bg-[#cfc6c6] rounded-sm flex items-center justify-center">
-                  <Heart className="dark:hover:bg-[#1E293B] dark:text-white text-black" />
-                </div>
-              </Link>
-            )}
-
-            {totalItems ? (
-              <Link to="/cart">
-                <div className="relative cursor-pointer w-[45px] h-[45px] dark:hover:bg-[#1E293B] hover:bg-[#cfc6c6] rounded-sm flex items-center justify-center">
-                  <ShoppingCart className="dark:hover:bg-[#1E293B] dark:text-white text-black" />
+                )}
+              </div>
+            </Link>
+            <Link to="/cart">
+              <div className="relative cursor-pointer w-[45px] h-[45px] dark:hover:bg-[#1E293B] hover:bg-[#cfc6c6] rounded-sm flex items-center justify-center">
+                <ShoppingCart className="dark:hover:bg-[#1E293B] dark:text-white text-black" />
+                {totalItems > 0 && (
                   <div className="absolute bg-[#3576DF] right-0 rounded-full text-[14px] w-5 h-5 top-0 flex justify-center items-center">
                     {totalItems}
                   </div>
-                </div>
-              </Link>
-            ) : (
-              <Link to="/cart">
-                <div className="cursor-pointer w-[45px] h-[45px] dark:hover:bg-[#1E293B] hover:bg-[#cfc6c6] rounded-sm flex items-center justify-center">
-                  <ShoppingCart className="dark:hover:bg-[#1E293B] dark:text-white text-black" />
-                </div>
-              </Link>
-            )}
-
+                )}
+              </div>
+            </Link>
             {user ? (
               <div className="relative w-full">
                 <Button
-                  onClick={() => {
-                    toggleMenu();
-                  }}
+                  onClick={toggleMenu}
                   className="rounded-full w-[50px] h-[50px] flex justify-center items-center bg-[yellow] cursor-pointer text-black"
                 >
-                  <span className="text-black uppercase"> {user?.name}</span>
+                  <span className="text-black uppercase">{user.name}</span>
                 </Button>
-                {open ? (
-                  <div className="absolute w-full border dark:*border-white top-[60px] left-0 bg-white dark:bg-[#020817] z-50 rounded-md">
+                {openUserMenu && (
+                  <div className="absolute w-full border dark:border-white top-[60px] left-0 bg-white dark:bg-[#020817] z-50 rounded-md">
                     <h1 className="px-2 py-1.5 text-sm font-semibold capitalize">
                       my account
                     </h1>
                     <hr />
                     <Link to="/profile">
-                      <p
-                        onClick={() => {
-                          toggleMenu();
-                        }}
-                        className="px-2 py-1.5 cursor-pointer hover:bg-[#1E293B]"
-                      >
+                      <p onClick={toggleMenu} className="px-2 py-1.5 cursor-pointer hover:bg-[#1E293B]">
                         Profile
                       </p>
                     </Link>
                     <Link to="/wishlist">
-                      <p
-                        onClick={() => {
-                          toggleMenu();
-                        }}
-                        className="px-2 py-1.5 cursor-pointer hover:bg-[#1E293B]"
-                      >
+                      <p onClick={toggleMenu} className="px-2 py-1.5 cursor-pointer hover:bg-[#1E293B]">
                         Wishlist
                       </p>
                     </Link>
                     <Link to="/cart">
-                      <p
-                        onClick={() => {
-                          toggleMenu();
-                        }}
-                        className="px-2 py-1.5 cursor-pointer hover:bg-[#1E293B]"
-                      >
+                      <p onClick={toggleMenu} className="px-2 py-1.5 cursor-pointer hover:bg-[#1E293B]">
                         Cart
                       </p>
                     </Link>
                     <hr />
                     <p
-                      onClick={() => {
-                        toggleMenu1();
-                      }}
+                      onClick={toggleMenu1}
                       className="px-2 py-1.5 cursor-pointer hover:bg-[#1E293B]"
                     >
                       Logout
                     </p>
                   </div>
-                ) : null}
+                )}
               </div>
             ) : (
               <Link to="/login">
@@ -247,6 +221,104 @@ export default function Header() {
           </ul>
         </div>
       </header>
+      <div
+        className={`fixed top-0 left-0 h-full w-[250px] bg-white dark:bg-[#020817] z-50 transform transition-transform duration-300 ease-in-out
+        ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
+        `}
+      >
+        <nav className="p-4 flex flex-col gap-4 text-black dark:text-white">
+          <Link to="/" onClick={() => setSidebarOpen(false)} className="hover:underline">
+            Home
+          </Link>
+          <Link to="/" onClick={() => setSidebarOpen(false)} className="hover:underline">
+            Products
+          </Link>
+          <Link to="/category" onClick={() => setSidebarOpen(false)} className="hover:underline">
+            Categories
+          </Link>
+          <Link to="/wishlist" onClick={() => setSidebarOpen(false)} className="flex items-center gap-2 hover:underline">
+            Wishlist  {likeCount > 0 && <span>({likeCount})</span>}
+          </Link>
+          <Link to="/cart" onClick={() => setSidebarOpen(false)} className="flex items-center gap-2 hover:underline">
+            Cart  {totalItems > 0 && <span>({totalItems})</span>}
+          </Link>
+          
+          
+
+          {user ? (
+            <>
+              <hr className="border-gray-300 dark:border-gray-600 my-4" />
+              <div className="flex flex-col gap-2">
+                <Link to="/profile" onClick={() => setSidebarOpen(false)} className="hover:underline">
+                  Profile
+                </Link>
+                <p
+                  onClick={() => {
+                    setUser(null);
+                    setSidebarOpen(false);
+                    navigate("/login");
+                  }}
+                  className="cursor-pointer hover:underline"
+                >
+                  Logout
+                </p>
+              </div>
+            </>
+          ) : (
+            <Link to="/login" onClick={() => setSidebarOpen(false)} className="hover:underline">
+              Login
+            </Link>
+          )}
+          <hr className="border-gray-300 dark:border-gray-600 my-4" />
+          <div onClick={() => setIsActive(!isActive)} className="flex items-center">
+            Theme
+            <div
+              className="relative cursor-pointer w-[45px] h-[45px] dark:hover:bg-[#1E293B] hover:bg-[#cfc6c6] rounded-sm flex items-center justify-center"
+            > 
+              {theme === "dark" ? (
+                <Moon className="text-white" />
+              ) : theme === "light" ? (
+                <Sun className="text-black" />
+              ) : (
+                <Sun className="text-black dark:text-white" />
+              )}
+              <div
+                className={
+                  isActive
+                    ? "w-[110px] absolute left-[-55px] top-[50px] dark:bg-transparent border  dark:text-white text-black rounded-md p-2 flex flex-col gap-2 z-50 bg-[#f1ecec]"
+                    : "hidden"
+                }
+              >
+                <p
+                  className="cursor-pointer dark:hover:bg-[#1E293B] hover:bg-[#cfc6c6] px-[5px] rounded-[5px]"
+                  onClick={() => handleThemeChange("light")}
+                >
+                  Light
+                </p>
+                <p
+                  className="cursor-pointer dark:hover:bg-[#1E293B] hover:bg-[#cfc6c6] px-[5px] rounded-[5px]"
+                  onClick={() => handleThemeChange("dark")}
+                >
+                  Dark
+                </p>
+                <p
+                  className="cursor-pointer dark:hover:bg-[#1E293B] hover:bg-[#cfc6c6] px-[5px] rounded-[5px]"
+                  onClick={() => handleThemeChange("system")}
+                >
+                  System
+                </p>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+      {sidebarOpen && (
+        <div
+          onClick={() => setSidebarOpen(false)}
+          className="fixed inset-0 bg-black opacity-40 z-40"
+        ></div>
+      )}
+
       <hr />
     </div>
   );
