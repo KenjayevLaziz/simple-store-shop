@@ -93,7 +93,7 @@ export default function Cart() {
                               onClick={() => {
                                 decreaseQuantity(product.id);
                               }}
-                              className="dark:text-white text-black cursor-pointer text-center px-3 pb-2 pt-0 text-xl  font-medium rounded-md  bg-transparent border hover:bg-[#1E293B] "
+                              className="dark:text-white text-black cursor-pointer text-center px-3 pb-2 pt-0 text-xl  font-medium rounded-md  bg-transparent border hover:bg-[#F1F5F9] dark:hover:bg-[#1E293B] "
                             >
                               -
                             </button>
@@ -104,7 +104,7 @@ export default function Cart() {
                               onClick={() => {
                                 increaseQuantity(product.id);
                               }}
-                              className="dark:text-white text-black cursor-pointer px-3 pb-2 pt-0 text-xl  font-medium rounded-md  bg-transparent border hover:bg-[#1E293B]"
+                              className="dark:text-white text-black hover:bg-[#F1F5F9] cursor-pointer px-3 pb-2 pt-0 text-xl  font-medium rounded-md  bg-transparent border dark:hover:bg-[#1E293B]"
                             >
                               +
                             </button>
