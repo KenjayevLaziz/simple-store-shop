@@ -4,6 +4,7 @@ import { useCart } from "../context/CartContext"
 import { useNavigate } from "react-router-dom"
 import { useSelectedProduct } from "../context/SelectedProductContext"
 import { type Product } from "../../types/product"
+import { Skeleton } from "../ui/skeleton"
 interface CardProps {
   searchProducts: Product[] | null
 }
@@ -12,7 +13,7 @@ export default function Card({ searchProducts }: CardProps) {
   const { setSelectedProductId } = useSelectedProduct()
   const navigate = useNavigate()
   const { addToCart } = useCart()
-
+  const arr=[1,1,1,1]
   return (
     <div className="min-h-[50vh] max-w-[1440px] w-full mx-auto p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
       {searchProducts ? (
@@ -71,10 +72,21 @@ export default function Card({ searchProducts }: CardProps) {
           )
         })
       ) : (
-        // Loading spinner
-        <div className="flex justify-center items-center h-40">
-          <div className="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" />
-        </div>
+          <>
+          {arr.map(()=>{
+            return (
+              <div className="flex flex-col space-y-3 border h-[400px]">
+              <Skeleton className="h-[320px] rounded-xl" />
+              <div className="space-y-2">
+              <Skeleton className="h-4 w-[250px] mb-4" />
+              <Skeleton className="h-4 w-[125px]" />
+             </div>
+            </div>
+            )
+          })}
+          </>
+         
+
       )}
 
       {searchProducts && searchProducts.length === 0 && (
