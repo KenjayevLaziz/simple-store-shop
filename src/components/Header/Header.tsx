@@ -102,7 +102,7 @@ export default function Header() {
         </nav>
 
         <div className="md:hidden flex items-center justify-between w-full">
-          <strong className="font-bold text-xl mb-4 cursor-pointer">Store</strong>
+          <strong className="font-bold text-xl text-black dark:text-white mb-4 cursor-pointer">Store</strong>
           <button onClick={toggleSidebar} aria-label="Toggle Menu" className="text-black dark:text-white">
             {sidebarOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
@@ -218,7 +218,9 @@ export default function Header() {
                 </Button>
               </Link>
             )}
+            
           </ul>
+          
         </div>
       </header>
       <div
