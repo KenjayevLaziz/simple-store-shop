@@ -32,7 +32,7 @@ export default function App() {
         <UserProvider>
           <LikedProductsProvider>
             <div className="flex flex-col justify-between min-h-screen text-white pt-[90px]">
-              <Header />
+              <Header products1={ products1 || []} />
               <Routes>
                 <Route path="/" element={<SearchFilter products1={products1} />} />
                 <Route path="/home" element={<SearchFilter products1={products1} />} />

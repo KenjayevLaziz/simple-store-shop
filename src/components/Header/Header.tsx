@@ -5,21 +5,40 @@ import { Link, useNavigate } from "react-router-dom";
 import { useUser } from "../context/UserContext";
 import { useCart } from "../context/CartContext";
 import { useLikedProducts } from "../context/LikedProductsContext";
-
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "../ui/tooltip"
 interface User {
   name: string;
   [key: string]: unknown;
 }
+type CartItem = {
+  product: Product;
+  quantity: number;
+};
+type Product = {
+  id: number;
+  title: string;
+  price: number;
+  image: string;
+};
+interface HeaderProps {
+  products1: Product[];
+}
 
-export default function Header() {
+export default function Header({ products1 }: HeaderProps) {
   const { setUser, user } = useUser() as {
     setUser: (user: User | null) => void;
     user: User | null;
   };
 
-  const { likeCount } = useLikedProducts() as { likeCount: number };
-  const { totalItems } = useCart() as { totalItems: number };
+  const { likeCount,likedIds } = useLikedProducts() as { likeCount: number;likedIds:number[]; };
 
+  const likedProducts = products1?.filter((p) => likedIds.includes(p.id))
+
+    const { totalItems, cartItems } = useCart() as { totalItems: number; cartItems: CartItem[] };
   const navigate = useNavigate();
 
   const [isActive, setIsActive] = useState<boolean>(false);
@@ -74,9 +93,9 @@ export default function Header() {
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
-
+  console.log(cartItems)
   return (
-    <div className="dark:bg-[#020817] bg-white text-white w-full fixed top-0 left-0 right-0 z-50 border-b border-gray-200 dark:border-gray-700">
+    <div className="dark:bg-[#020817] bg-white text-white w-full fixed top-0 left-0 right-0 z-50 border-b border-gray-200 dark:border-gray-700 ">
       <header className="text-white p-4 flex w-full max-w-[1440px] justify-between items-center mx-auto z-50">
         <nav className="hidden md:flex max-w-[450px] w-full justify-between">
           <ul className="dark:text-white text-black flex items-center justify-between max-w-[300px] w-full">
@@ -149,26 +168,119 @@ export default function Header() {
               </div>
             </div>
 
-            <Link to="/wishlist">
-              <div className="relative cursor-pointer w-[45px] h-[45px] dark:hover:bg-[#1E293B] hover:bg-[#cfc6c6] rounded-sm flex items-center justify-center">
-                <Heart className="dark:hover:bg-[#1E293B] dark:text-white text-black" />
-                {likeCount > 0 && (
-                  <div className="absolute bg-[#3576DF] right-0 rounded-full text-[14px] w-5 h-5 top-0 flex justify-center items-center">
-                    {likeCount}
+
+              <Tooltip>
+
+                <TooltipTrigger>
+
+                <Link to="/wishlist">
+                  <div className="relative cursor-pointer w-[45px] h-[45px] dark:hover:bg-[#1E293B] hover:bg-[#cfc6c6] rounded-sm flex items-center justify-center">
+                    <Heart className="dark:hover:bg-[#1E293B] dark:text-white text-black" />
+                    {likeCount > 0 && (
+                      <div className="absolute bg-[#3576DF] right-0 rounded-full text-[14px] w-5 h-5 top-0 flex justify-center items-center">
+                        {likeCount}
+                      </div>
+                    )}
                   </div>
-                )}
-              </div>
-            </Link>
-            <Link to="/cart">
-              <div className="relative cursor-pointer w-[45px] h-[45px] dark:hover:bg-[#1E293B] hover:bg-[#cfc6c6] rounded-sm flex items-center justify-center">
-                <ShoppingCart className="dark:hover:bg-[#1E293B] dark:text-white text-black" />
-                {totalItems > 0 && (
-                  <div className="absolute bg-[#3576DF] right-0 rounded-full text-[14px] w-5 h-5 top-0 flex justify-center items-center">
-                    {totalItems}
+                </Link>
+                </TooltipTrigger>
+                  <TooltipContent className="dark:bg-[#020817] bg-white relative top-3 w-[250px] dark:text-white text-black">
+                    <div className="">
+                      <p className="font-medium mb-2">Wishlis(<span>{likeCount}</span>)</p>
+                      {likeCount?
+                      <> {likeCount < 4
+                          ? likedProducts.map((item: Product) => (
+                              <div key={item.id} className="flex gap-3">
+                                <img className="w-10 h-12 mb-1" src={item.image} alt={item.title} />
+                                <div className="w-[180px] flex flex-col justify-center">
+                                  <p className="truncate">{item.title}</p>
+                                  <p>${item.price}</p>
+                                </div>
+                              </div>
+                            ))
+                          : (
+                              <>
+                                {likedProducts.slice(0, 3).map((item: Product) => (
+                                  <div key={item.id} className="flex gap-3 ">
+                                    <img className="w-10 h-12 mb-1" src={item.image} alt={item.title} />
+                                    <div className="w-[180px] flex flex-col justify-center">
+                                      <p className="text-xs font-medium truncate">{item.title}</p>
+                                      <p className="text-xs text-muted-foreground">${item.price}</p>
+                                    </div>
+                                  </div>
+                                ))}
+                                <p className="text-center text-muted-foreground">+{likeCount - 3} more items</p>
+                              </>
+                            )
+                        }
+                      </> 
+                      : <p className="text-sm text-muted-foreground">Your wishlist is empty</p>}
+                      <Link to={"/wishlist"}>
+                        <Button className="cursor-pointer bg-[#3576DF] hover:bg-[#1668eb] inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-primary-foreground  h-9 rounded-md px-3 w-full mt-2">
+                      View Wishlist
+                      </Button>
+                      </Link>
+                    </div>
+                  </TooltipContent>
+              </Tooltip>
+
+              <Tooltip>
+
+                <TooltipTrigger>
+
+                    <Link to="/cart">
+                  <div className="relative cursor-pointer w-[45px] h-[45px] dark:hover:bg-[#1E293B] hover:bg-[#cfc6c6] rounded-sm flex items-center justify-center">
+                    <ShoppingCart className="dark:hover:bg-[#1E293B] dark:text-white text-black" />
+                    {totalItems > 0 && (
+                      <div className="absolute bg-[#3576DF] right-0 rounded-full text-[14px] w-5 h-5 top-0 flex justify-center items-center">
+                        {totalItems}
+                      </div>
+                    )}
                   </div>
-                )}
-              </div>
-            </Link>
+                </Link>
+                </TooltipTrigger>
+                  <TooltipContent className="dark:bg-[#020817] bg-white relative top-3 w-[250px] dark:text-white text-black">
+                    <div className="">
+                      <p className="font-medium mb-2">Cart(<span>{totalItems}</span>)</p>
+                      {totalItems ? 
+                        <>{cartItems.length < 4
+                          ? cartItems.map((item: CartItem) => (
+                              <div key={item.product.id} className="flex gap-3">
+                                <img className="w-10 h-12 mb-1" src={item.product.image} alt={item.product.title} />
+                                <div className="w-[180px] flex flex-col justify-center">
+                                  <p className=" text-xs font-medium truncate">{item.product.title}</p>
+                                  <p className="text-xs text-muted-foreground">${item.product.price}  ×  {item.quantity}</p>
+                                </div>
+                              </div>
+                            ))
+                          : (
+                              <>
+                                {cartItems.slice(0, 3).map((item: CartItem) => (
+                                  <div key={item.product.id} className="flex gap-3 ">
+                                    <img className="w-10 h-12 mb-1" src={item.product.image} alt={item.product.title} />
+                                    <div className="w-[180px] flex flex-col justify-center">
+                                      <p className="text-xs font-medium truncate">{item.product.title}</p>
+                                      <p className="text-xs text-muted-foreground">${item.product.price}  × {item.quantity}</p>
+                                    </div>
+                                  </div>
+                                ))}
+                                <p className="text-center text-muted-foreground">+{totalItems-3} more items</p>
+                              </>
+                            )
+                        }
+                        
+                       </> 
+                      : <p className="text-sm text-muted-foreground">Your wishlist is empty</p>}
+                      <Link to={"/cart"}>
+                        <Button className="cursor-pointer bg-[#3576DF] hover:bg-[#1668eb] inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-primary-foreground  h-9 rounded-md px-3 w-full mt-2">
+                      View Cart
+                      </Button>
+                      </Link>
+                    </div>
+                  </TooltipContent>
+              </Tooltip>
+              
+            
             {user ? (
               <div className="relative w-full">
                 <Button
@@ -320,8 +432,6 @@ export default function Header() {
           className="fixed inset-0 bg-black opacity-40 z-40"
         ></div>
       )}
-
-      <hr />
     </div>
   );
 }
