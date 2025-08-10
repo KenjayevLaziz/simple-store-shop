@@ -10,13 +10,13 @@ interface ProductInfoProps {
 
 export default function ProductInfo({ products1 }: ProductInfoProps) {
   const { likedIds, toggleLike } = useLikedProducts()
-  const {  addToCart,cartItems } = useCart()
+  const {  addToCart } = useCart()
   const { id } = useParams()
   const product = products1?.find((item) => item?.id === Number(id))
   if (!product) {
     return (
       <div className="text-black dark:text-white  container mx-auto px-4 py-8">
-        <p>Loading product...</p>
+        <p>Loading product.....</p>
       </div>
     )
   }
