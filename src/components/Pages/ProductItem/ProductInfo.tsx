@@ -1,25 +1,18 @@
-import { useEffect, useState } from "react"
 import { Link, useParams } from "react-router-dom"
 import { Heart, Star } from "lucide-react"
 import { useCart } from "../../context/CartContext"
 import { useLikedProducts } from "../../context/LikedProductsContext"
 import type { Product } from "../../../types/product"
+interface ProductInfoProps {
+  products1: Product[];
+}
 
-export default function ProductInfo() {
+export default function ProductInfo({ products1 }: ProductInfoProps) {
   const { likedIds, toggleLike } = useLikedProducts()
-  const {  addToCart } = useCart()
+  const {  addToCart  } = useCart()
   const { id } = useParams()
-  const [product, setProduct] = useState<Product | null>(null)
-
-  useEffect(() => {
-    if (!id) return
-    fetch(`https://fakestoreapi.com/products/${id}`)
-      .then((res) => res.json())
-      .then((data: Product) => {
-        setProduct(data)
-      })
-  }, [id])
-
+  const product = products1?.find((item) => item?.id === Number(id))
+  console.log(product);
   if (!product) {
     return (
       <div className="text-black dark:text-white  container mx-auto px-4 py-8">

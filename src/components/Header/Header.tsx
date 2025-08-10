@@ -93,7 +93,6 @@ export default function Header({ products1 }: HeaderProps) {
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
-  console.log(cartItems)
   return (
     <div className="dark:bg-[#020817] bg-white text-white w-full fixed top-0 left-0 right-0 z-50 border-b border-gray-200 dark:border-gray-700 ">
       <header className="text-white p-4 flex w-full max-w-[1440px] justify-between items-center mx-auto z-50">

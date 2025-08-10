@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button"
+
 export default function Category(){
     return <>
         <div className=" max-w-[1440px] w-full mx-auto px-[15px]">

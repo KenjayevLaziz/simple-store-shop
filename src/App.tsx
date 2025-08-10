@@ -41,7 +41,7 @@ export default function App() {
                 <Route path="/category" element={<Category />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
-                <Route path={`/product/:id`} element={<ProductInfo />} />
+                <Route path={`/product/:id`} element={<ProductInfo products1={products1 || []} />} />
                 <Route path="/profile" element={<Profile />} />
               </Routes>
               <Footer />
