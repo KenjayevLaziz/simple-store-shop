@@ -3,16 +3,16 @@ import { Heart, Star } from "lucide-react"
 import { useCart } from "../../context/CartContext"
 import { useLikedProducts } from "../../context/LikedProductsContext"
 import type { Product } from "../../../types/product"
+import { useState } from "react"
 interface ProductInfoProps {
   products1: Product[];
 }
 
 export default function ProductInfo({ products1 }: ProductInfoProps) {
   const { likedIds, toggleLike } = useLikedProducts()
-  const {  addToCart  } = useCart()
+  const {  addToCart,cartItems } = useCart()
   const { id } = useParams()
   const product = products1?.find((item) => item?.id === Number(id))
-  console.log(product);
   if (!product) {
     return (
       <div className="text-black dark:text-white  container mx-auto px-4 py-8">
@@ -22,7 +22,11 @@ export default function ProductInfo({ products1 }: ProductInfoProps) {
   }
 
   const isLiked = likedIds.includes(product.id)
-
+  const [inc,setInc]=useState(1)
+   function increment() {
+   setInc(prev => prev + 1)  }
+    function decrement() {
+   setInc(prev => prev>1 ? prev-1 : 1)  }
   return (
     <div className="container mx-auto px-4 py-8 max-w-[1440px] w-full">
       <Link
@@ -63,33 +67,35 @@ export default function ProductInfo({ products1 }: ProductInfoProps) {
             <p className="text-muted-foreground mb-3">{product.description}</p>
           </div>
           <div className="flex items-center gap-4 mb-6">
-            {/* <h2 className=" text-black dark:text-white font-medium text-2xl">Quantity</h2> */}
-            {/* <div className="flex items-center">
+            <h2 className=" text-black dark:text-white font-medium text-2xl">Quantity</h2>
+            <div className="flex items-center">
               <button
                 onClick={() => {
-                  decreaseQuantity(product.id)
+                  decrement()
                 }}
                 className="px-4 py-1 text-2xl text-white bg-transparent border hover:bg-[#1E293B] rounded-md"
               >
                 -
               </button>
               <span className="px-4 py-1 text-2xl font-medium w-[55px]">
-                1
+                {inc}
               </span>
               <button
                 onClick={() => {
-                  increaseQuantity(product.id)
+                  increment()
                 }}
                 className="px-4 py-1 text-2xl text-white bg-transparent border hover:bg-[#1E293B] rounded-md"
               >
                 +
               </button>
-            </div> */}
+            </div>
           </div>
           <div className="flex items-center gap-4">
             <button
               onClick={() => {
-                addToCart(product)
+                for (let i=0;i<inc;i++){
+                  addToCart(product)
+                }
               }}
               className="cursor-pointer w-full px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700"
             >
