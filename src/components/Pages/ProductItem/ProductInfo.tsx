@@ -78,9 +78,9 @@ export default function ProductInfo({ products1 }: ProductInfoProps) {
             <div className="flex w-full max-w-sm flex-col gap-6">
           <Tabs defaultValue="description">
             <TabsList>
-              <TabsTrigger  value="description">Description</TabsTrigger>
-              <TabsTrigger value="details">Details</TabsTrigger>
-              <TabsTrigger value="shipping">Shipping</TabsTrigger>
+              <TabsTrigger  value="description">description</TabsTrigger>
+              <TabsTrigger value="details">details</TabsTrigger>
+              <TabsTrigger value="shipping">shipping</TabsTrigger>
             </TabsList>
             <TabsContent value="description">
               <Card>
