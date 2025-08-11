@@ -170,7 +170,7 @@ export default function ProductInfo({ products1 }: ProductInfoProps) {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
           {relatedProduct?.map((item)=>{
             return(
-              <div className="p-3 rounded-lg border bg-[#020817] text-card-foreground shadow-sm overflow-hidden">
+              <div className="p-3 rounded-lg border dark:bg-[#020817] text-card-foreground shadow-sm overflow-hidden">
                 <div className="relative aspect-square">
                   <img className="truncate object-cover transition-transform duration-300 group-hover:scale-110 w-full h-[320px] mb-4 rounded-md" src={item.image} alt={item.title} />
                 </div>
@@ -188,7 +188,7 @@ export default function ProductInfo({ products1 }: ProductInfoProps) {
                 </p>
                 <button
                   onClick={() => addToCart(item)}
-                  className="w-full bg-transparent text-black dark:text-white py-2 cursor-pointer border rounded-md hover:bg-[#1E293B] transition-colors"
+                  className="w-full bg-transparent text-black dark:text-white py-2 cursor-pointer border rounded-md dark:hover:bg-[#1E293B] transition-colors hover:bg-[#F1F5F9]"
                 >
                   Add to Cart
                 </button>
