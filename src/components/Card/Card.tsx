@@ -84,9 +84,7 @@ export default function Card({ searchProducts }: CardProps) {
             </div>
             )
           })}
-          </>
-         
-
+          </>      
       )}
 
       {searchProducts && searchProducts.length === 0 && (

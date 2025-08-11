@@ -15,9 +15,9 @@ import { SelectedProductProvider } from "./components/context/SelectedProductCon
 import Profile from "./components/Pages/Profile/Profile"
 import { CartProvider } from "./components/context/CartContext"
 import {type Product } from "./types/product.ts"
+import {CategoryProvider} from "./components/context/CategoryContext.tsx"
 export default function App() {
   const [products1, setProducts] = useState<Product[] | null>(null)
-
   useEffect(() => {
     fetch("https://fakestoreapi.com/products")
       .then((res) => res.json())
@@ -25,9 +25,8 @@ export default function App() {
         setProducts(data)
       })
   }, [])
-
   return (
-
+    <CategoryProvider>
       <SelectedProductProvider>
       <CartProvider>
         <UserProvider>
@@ -51,6 +50,6 @@ export default function App() {
         </UserProvider>
       </CartProvider>
       </SelectedProductProvider>
-
+    </CategoryProvider>
   )
 }

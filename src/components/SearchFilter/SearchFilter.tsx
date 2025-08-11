@@ -2,26 +2,32 @@ import { Search, Filter } from "lucide-react"
 import Card from "../Card/Card"
 import { useState, type ChangeEvent, type MouseEvent } from "react"
 import { type Product } from "../../types/product"
-
+import {useCategory } from "../context/CategoryContext"
+import { useEffect } from "react"
 interface SearchFilterProps {
   products1: Product[] | null
 }
-
 export default function SearchFilter({ products1 }: SearchFilterProps) {
-  const [category, setCategory] = useState<string>("All category")
-  const [name1, setName1] = useState<string>("")
-  const [isfilter, setIsFilter] = useState<boolean>(false)
+const [category, setCategory] = useState<string>("All category");
+const [name1, setName1] = useState<string>("");
+const [isfilter, setIsFilter] = useState<boolean>(false);
+const { categoryName } = useCategory();
+useEffect(() => {
+  if (categoryName) {
+    setCategory(categoryName);
+  }
+}, [categoryName]);
 
-  const searchProducts: Product[] = (products1 ?? []).filter((product) => {
-    const search = name1.toLowerCase()
-    const title = product.title.toLowerCase()
-    return (
-      title.includes(search) &&
-      (category === "All category" ||
-        product.category.toLowerCase() === category.toLowerCase())
-    )
-  })
+const searchProducts: Product[] = (products1 ?? []).filter((product) => {
+  const search = name1.toLowerCase();
+  const title = product.title.toLowerCase();
 
+  return (
+    title.includes(search) &&
+    (category === "All category" ||
+      product.category.toLowerCase() === category.toLowerCase())
+  );
+});
   const handleCategoryClick = (e: MouseEvent<HTMLParagraphElement>) => {
     const value = e.currentTarget.dataset.value
     if (value) {
@@ -29,7 +35,6 @@ export default function SearchFilter({ products1 }: SearchFilterProps) {
     }
     setIsFilter(false)
   }
-
   return (
     <>
       <div className="max-w-[1440px] w-full mx-auto p-4">
@@ -72,7 +77,6 @@ export default function SearchFilter({ products1 }: SearchFilterProps) {
           </div>
         </div>
       </div>
-
       <Card searchProducts={searchProducts} />
     </>
   )
