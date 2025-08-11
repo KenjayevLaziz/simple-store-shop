@@ -2,13 +2,14 @@ import { Link, useParams } from "react-router-dom"
 import { Heart, Star } from "lucide-react"
 import { useCart } from "../../context/CartContext"
 import { useLikedProducts } from "../../context/LikedProductsContext"
+import { useNavigate } from "react-router-dom"
+import { useSelectedProduct } from "../../context/SelectedProductContext"
 import type { Product } from "../../../types/product"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../ui/tabs"
 import {
   Card,
   CardContent,
 } from "@/components/ui/card"
-
 import { useState } from "react"
 interface ProductInfoProps {
   products1: Product[];
@@ -17,8 +18,11 @@ interface ProductInfoProps {
 export default function ProductInfo({ products1 }: ProductInfoProps) {
   const { likedIds, toggleLike } = useLikedProducts()
   const {  addToCart } = useCart()
+  const { setSelectedProductId } = useSelectedProduct()
+  const navigate = useNavigate()
   const { id } = useParams()
   const product = products1?.find((item) => item?.id === Number(id))
+  const relatedProduct = products1?.filter((item)=>(item.category===product?.category && item.id !== product?.id ))
   if (!product) {
     return (
       <div className="text-black dark:text-white  container mx-auto px-4 py-8">
@@ -135,14 +139,14 @@ export default function ProductInfo({ products1 }: ProductInfoProps) {
               </button>
             </div>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex gap-4 w-full max-w-[750px]">
             <button
               onClick={() => {
                 for (let i=0;i<inc;i++){
                   addToCart(product)
                 }
               }}
-              className="cursor-pointer w-full px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700"
+              className="cursor-pointer w-full  px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700"
             >
               Add to Cart
             </button>
@@ -159,6 +163,38 @@ export default function ProductInfo({ products1 }: ProductInfoProps) {
               />
             </div>
           </div>
+        </div>
+      </div>
+      <div className="">
+        <h1 className="capitalize text-2xl font-bold mb-6">related product</h1>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+          {relatedProduct?.map((item)=>{
+            return(
+              <div className="p-3 rounded-lg border bg-[#020817] text-card-foreground shadow-sm overflow-hidden">
+                <div className="relative aspect-square">
+                  <img className="truncate object-cover transition-transform duration-300 group-hover:scale-110 w-full h-[320px] mb-4 rounded-md" src={item.image} alt={item.title} />
+                </div>
+                <h2
+                  onClick={() => {
+                    navigate(`/product/${item.id}`)
+                    setSelectedProductId(item.id)
+                  }}
+                  className="hover:underline cursor-pointer dark:text-white text-black text-lg font-semibold mb-2 truncate w-64"
+                >
+                  {item.title}
+                </h2>
+                <p className="dark:text-white text-black mb-4">
+                  ${item.price}
+                </p>
+                <button
+                  onClick={() => addToCart(item)}
+                  className="w-full bg-transparent text-black dark:text-white py-2 cursor-pointer border rounded-md hover:bg-[#1E293B] transition-colors"
+                >
+                  Add to Cart
+                </button>
+              </div>
+            )
+          })}
         </div>
       </div>
     </div>
