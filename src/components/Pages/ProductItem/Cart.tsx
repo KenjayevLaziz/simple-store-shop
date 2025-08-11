@@ -2,7 +2,6 @@ import { Button } from "@/components/ui/button";
 import { useCart } from "../../context/CartContext";
 import { Link, useNavigate } from "react-router-dom";
 import { MoveRight, Archive } from "lucide-react";
-
 type Product = {
   id: number;
   title: string;
@@ -14,7 +13,6 @@ type CartItem = {
   product: Product;
   quantity: number;
 };
-
 export default function Cart() {
   const navigite = useNavigate();
   const {
@@ -73,7 +71,7 @@ export default function Cart() {
                         <img
                           src={product.image}
                           alt={product.title}
-                          className=" w-20 h-20 object-cover mb-2"
+                          className=" w-20 h-25 mb-2"
                         />
                         <div className="">
                           <h2
@@ -117,8 +115,8 @@ export default function Cart() {
                           </div>
                         </div>
                       </div>
-                      <p className="font-medium">
-                        ${quantity * product.price}
+                      <p className="font-medium dark:text-white text-black">
+                        ${(quantity * product.price).toFixed(2)}
                       </p>
                     </div>
                   </div>

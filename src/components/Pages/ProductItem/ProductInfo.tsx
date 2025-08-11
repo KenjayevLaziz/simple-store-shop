@@ -3,6 +3,17 @@ import { Heart, Star } from "lucide-react"
 import { useCart } from "../../context/CartContext"
 import { useLikedProducts } from "../../context/LikedProductsContext"
 import type { Product } from "../../../types/product"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../ui/tabs"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+
+// import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useState } from "react"
 interface ProductInfoProps {
   products1: Product[];
@@ -16,7 +27,7 @@ export default function ProductInfo({ products1 }: ProductInfoProps) {
   if (!product) {
     return (
       <div className="text-black dark:text-white  container mx-auto px-4 py-8">
-        <p>Loading product.....</p>
+        <p>Loading product...</p>
       </div>
     )
   }
@@ -64,7 +75,46 @@ export default function ProductInfo({ products1 }: ProductInfoProps) {
           </div>
           <p className="text-black dark:text-white text-xl font-semibold mb-4">$ {product.price}</p>
           <div>
-            <p className="text-muted-foreground mb-3">{product.description}</p>
+            <div className="flex w-full max-w-sm flex-col gap-6">
+          <Tabs defaultValue="description">
+            <TabsList>
+              <TabsTrigger  value="description">Description</TabsTrigger>
+              <TabsTrigger value="details">Details</TabsTrigger>
+              <TabsTrigger value="shipping">Shipping</TabsTrigger>
+            </TabsList>
+            <TabsContent value="description">
+              <Card>
+                <CardContent className="grid gap-6">
+                  <p className="text-muted-foreground mb-3">{product.description}</p>
+                </CardContent>
+              </Card>
+            </TabsContent>
+            <TabsContent value="details">
+              <Card>
+                <CardContent className="space-y-2 text-muted-foreground">
+                  <p><strong>Category:</strong> <span>{product.category}</span></p>
+                  <p><strong>SKU:</strong> <span>PROD-{product.id}</span></p>
+                  <p><strong>Availability:</strong> <span>In Stock</span></p>
+                  <p><strong>Rating:</strong> <span>{product.rating.rate}/5 (<span>{product.rating.count} reviews</span>)</span></p>
+                </CardContent>
+                
+              </Card>
+            </TabsContent>
+            <TabsContent value="shipping">
+              <Card>
+                <CardContent className="space-y-2 text-muted-foreground">
+                  <p>Free shipping on orders over $50</p>
+                  <p>Standard shipping: 3-5 business days</p>
+                  <p>Express shipping: 1-2 business days</p>
+                  <p>International shipping available</p>
+                </CardContent>
+                
+              </Card>
+            </TabsContent>
+          </Tabs>
+        </div>
+
+            
           </div>
           <div className="flex items-center gap-4 mb-6">
             <h2 className=" text-black dark:text-white font-medium text-2xl">Quantity</h2>
@@ -73,18 +123,18 @@ export default function ProductInfo({ products1 }: ProductInfoProps) {
                 onClick={() => {
                   decrement()
                 }}
-                className="px-4 py-1 text-2xl text-white bg-transparent border hover:bg-[#1E293B] rounded-md"
+                className="cursor-pointer px-4 py-1 pb-2 text-2xl hover:bg-[#F1F5F9] dark:text-white bg-transparent border text-black dark:hover:bg-[#1E293B] rounded-md"
               >
                 -
               </button>
-              <span className="px-4 py-1 text-2xl font-medium w-[55px]">
+              <span className="dark:text-white text-black px-4 py-1 text-2xl font-medium w-[55px]">
                 {inc}
               </span>
               <button
                 onClick={() => {
                   increment()
                 }}
-                className="px-4 py-1 text-2xl text-white bg-transparent border hover:bg-[#1E293B] rounded-md"
+                className="cursor-pointer px-4 py-1 pb-2 text-2xl hover:bg-[#F1F5F9] dark:text-white bg-transparent border text-black dark:hover:bg-[#1E293B] rounded-md"
               >
                 +
               </button>

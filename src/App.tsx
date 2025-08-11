@@ -27,7 +27,8 @@ export default function App() {
   }, [])
 
   return (
-    <SelectedProductProvider>
+
+      <SelectedProductProvider>
       <CartProvider>
         <UserProvider>
           <LikedProductsProvider>
@@ -49,6 +50,7 @@ export default function App() {
           </LikedProductsProvider>
         </UserProvider>
       </CartProvider>
-    </SelectedProductProvider>
+      </SelectedProductProvider>
+
   )
 }
