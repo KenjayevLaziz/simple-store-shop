@@ -7,13 +7,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../ui/tabs"
 import {
   Card,
   CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
 } from "@/components/ui/card"
 
-// import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useState } from "react"
 interface ProductInfoProps {
   products1: Product[];
